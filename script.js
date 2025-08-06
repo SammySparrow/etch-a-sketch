@@ -9,7 +9,10 @@ function pixelGrid(size) {
   const width = 600 / size;
   for (let i = 0; i < size * size; i++) {
     const block = document.createElement("div");
-    block.setAttribute("style", `height: ${height}px; width: ${width}px;`);
+    block.setAttribute(
+      "style",
+      `height: ${height}px; width: ${width}px; opacity: 0;`
+    );
     container.appendChild(block);
   }
 
@@ -17,7 +20,12 @@ function pixelGrid(size) {
 
   squares.forEach((div) => {
     div.addEventListener("mouseover", (e) => {
-      e.target.style.background = "black";
+      let randomHSL = Math.floor(Math.random() * 359);
+      e.target.style.background = `hsla(${randomHSL}, 100%, 50%)`;
+
+      let opacity = getComputedStyle(e.target).getPropertyValue("opacity");
+      let maxOpacity = Math.min(Number(opacity) + 0.1, 1);
+      e.target.style.opacity = maxOpacity;
     });
   });
 
